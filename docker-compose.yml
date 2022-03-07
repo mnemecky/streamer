@@ -1,0 +1,14 @@
+version: "3"
+services:
+    streamer:
+        container_name: streamer
+        image: ringnet/streamer
+        logging:
+                driver: "none"
+        restart: unless-stopped
+        ports:
+                - "81:81"
+        tmpfs:
+                - /app
+        environment:
+                PARAMETERS: "rtsp://192.168.125.101:554/live/ch00_0 door rtsp://192.168.125.103:554/live/ch00_0 entry rtsp://admin:Monica56@10.0.0.203:554/cam/realmonitor?channel=1&subtype=1 doorbell"
