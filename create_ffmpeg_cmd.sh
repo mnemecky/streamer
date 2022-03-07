@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OUTPUT_PATH=/tmp/stream/
+OUTPUT_PATH=/app
 
 DEFAULT_AUDIO="copy"
 DEFAULT_VIDEO="copy"
@@ -32,6 +32,6 @@ if [ "$INPUT" == rtsp://* ]; then
   IS_RTSP="-rtsp_transport tcp"
 fi
 
-FFMPEG_CMD="ffmpeg -rtsp_transport tcp -i ${INPUT} ${LACKING_AUDIO} -acodec ${DEFAULT_AUDIO} -vcodec ${DEFAULT_VIDEO} -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments ${OUTPUT_PATH}${OUTPUT}.m3u8"
+FFMPEG_CMD="ffmpeg -rtsp_transport tcp -thread_queue_size 32 -fflags +genpts -i ${INPUT} ${LACKING_AUDIO} -acodec ${DEFAULT_AUDIO} -vcodec ${DEFAULT_VIDEO} -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments ${OUTPUT_PATH}/${OUTPUT}.m3u8"
 
 echo "${FFMPEG_CMD}"
